@@ -1,7 +1,8 @@
-#ifndef CONFIGURATION_H
+﻿#ifndef CONFIGURATION_H
 #define CONFIGURATION_H
 
 #include "boards.h"
+
 
 //===========================================================================
 //============================= Getting Started =============================
@@ -38,10 +39,10 @@ Here are some standard links for getting your machine calibrated:
 // User-specified version info of this build to display in [Pronterface, etc] terminal window during
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
-#define STRING_VERSION "1.0.2"
+#define STRING_VERSION "v1.0.2"
 #define STRING_URL "reprap.org"
 #define STRING_VERSION_CONFIG_H __DATE__ " " __TIME__ // build date and time
-#define STRING_CONFIG_H_AUTHOR "(robscar@hotmail.de, K8200 GT2 20Thooth)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(K8200, CONSULitAS)" // Who made the changes.
 #define STRING_SPLASH_LINE1 "v" STRING_VERSION // will be shown during bootup in line 1
 //#define STRING_SPLASH_LINE2 STRING_VERSION_CONFIG_H // will be shown during bootup in line2
 
@@ -60,6 +61,7 @@ Here are some standard links for getting your machine calibrated:
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
   #define MOTHERBOARD BOARD_K8200
+  //#define MOTHERBOARD 77
 #endif
 
 // Define this to set a custom name for your generic Mendel,
@@ -80,6 +82,7 @@ Here are some standard links for getting your machine calibrated:
 
 // Define this to have the electronics keep the power supply off on startup. If you don't know what this is leave it.
 // #define PS_DEFAULT_OFF
+
 
 //===========================================================================
 //============================= Thermal Settings ============================
@@ -118,7 +121,6 @@ Here are some standard links for getting your machine calibrated:
 // 1010 is Pt1000 with 1k pullup (non standard)
 // 147 is Pt100 with 4k7 pullup
 // 110 is Pt100 with 1k pullup (non standard)
-// 999 is a Dummy Table. It will ALWAYS read 25C.. Use it for Testing or Development purposes. NEVER for production machine.
 
 #define TEMP_SENSOR_0 5
 #define TEMP_SENSOR_1 0
@@ -194,15 +196,15 @@ Here are some standard links for getting your machine calibrated:
 //    #define  DEFAULT_Ki 0.1
 //    #define  DEFAULT_Kd 12
 
-// Vellemann K8200 Extruder - calculated with PID Autotune and tested
-//   #define  DEFAULT_Kp 24.29
-//   #define  DEFAULT_Ki 1.58
-//   #define  DEFAULT_Kd 93.51
-
 // Mendel Parts V9 on 12V
-    #define  DEFAULT_Kp 63.0
-    #define  DEFAULT_Ki 2.25
-    #define  DEFAULT_Kd 440
+//    #define  DEFAULT_Kp 63.0
+//    #define  DEFAULT_Ki 2.25
+//    #define  DEFAULT_Kd 440
+
+// Vellemann K8200 Extruder - calculated with PID Autotune and tested
+   #define  DEFAULT_Kp 24.29
+   #define  DEFAULT_Ki 1.58
+   #define  DEFAULT_Kd 93.51
 #endif // PIDTEMP
 
 //===========================================================================
@@ -230,9 +232,9 @@ Here are some standard links for getting your machine calibrated:
 #ifdef PIDTEMPBED
 //120v 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
 //from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-    #define  DEFAULT_bedKp 10.00
-    #define  DEFAULT_bedKi .023
-    #define  DEFAULT_bedKd 305.4
+//    #define  DEFAULT_bedKp 10.00
+//    #define  DEFAULT_bedKi .023
+//    #define  DEFAULT_bedKd 305.4
 
 //120v 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
 //from pidautotune
@@ -240,7 +242,13 @@ Here are some standard links for getting your machine calibrated:
 //    #define  DEFAULT_bedKi 1.41
 //    #define  DEFAULT_bedKd 1675.16
 
-// FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
+//Vellemann K8200 PCB heatbed with standard PCU - calculated with PID Autotune and tested
+//from pidautotune
+   #define  DEFAULT_bedKp 341.88
+   #define  DEFAULT_bedKi 25.32
+   #define  DEFAULT_bedKd 1153.89
+
+   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
 
 
@@ -252,6 +260,7 @@ Here are some standard links for getting your machine calibrated:
 
 #define EXTRUDE_MINTEMP 170
 #define EXTRUDE_MAXLENGTH (X_MAX_LENGTH+Y_MAX_LENGTH) //prevent extrusion of very large distances.
+
 
 //===========================================================================
 //============================= Thermal Runaway Protection ==================
@@ -308,15 +317,15 @@ your extruder heater takes 2 minutes to hit the target on heating.
   // #define ENDSTOPPULLUP_XMAX
   // #define ENDSTOPPULLUP_YMAX
   // #define ENDSTOPPULLUP_ZMAX
-  // #define ENDSTOPPULLUP_XMIN
-  // #define ENDSTOPPULLUP_YMIN
-  // #define ENDSTOPPULLUP_ZMIN
+  #define ENDSTOPPULLUP_XMIN
+  #define ENDSTOPPULLUP_YMIN
+  #define ENDSTOPPULLUP_ZMIN
 #endif
 
 #ifdef ENDSTOPPULLUPS
-  //#define ENDSTOPPULLUP_XMAX
-  //#define ENDSTOPPULLUP_YMAX
-  //#define ENDSTOPPULLUP_ZMAX
+  // #define ENDSTOPPULLUP_XMAX
+  // #define ENDSTOPPULLUP_YMAX
+  // #define ENDSTOPPULLUP_ZMAX
   #define ENDSTOPPULLUP_XMIN
   #define ENDSTOPPULLUP_YMIN
   #define ENDSTOPPULLUP_ZMIN
@@ -326,11 +335,16 @@ your extruder heater takes 2 minutes to hit the target on heating.
 const bool X_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool Y_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 const bool Z_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
-const bool X_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
-const bool Y_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
-const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
-//#define DISABLE_MAX_ENDSTOPS
+const bool X_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
+const bool Y_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
+const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
+#define DISABLE_MAX_ENDSTOPS
 //#define DISABLE_MIN_ENDSTOPS
+
+// Disable max endstops for compatibility with endstop checking routine
+#if defined(COREXY) && !defined(DISABLE_MAX_ENDSTOPS)
+  #define DISABLE_MAX_ENDSTOPS
+#endif
 
 // For Inverting Stepper Enable Pins (Active Low) use 0, Non Inverting (Active High) use 1
 #define X_ENABLE_ON 0
@@ -341,13 +355,13 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 // Disables axis when it's not being used.
 #define DISABLE_X false
 #define DISABLE_Y false
-#define DISABLE_Z false
+#define DISABLE_Z true
 #define DISABLE_E false // For all extruders
 #define DISABLE_INACTIVE_EXTRUDER true //disable only inactive extruders and keep active extruder enabled
 
-#define INVERT_X_DIR false     // for Mendel set to false, for Orca set to true
+#define INVERT_X_DIR false    // for Mendel set to false, for Orca set to true
 #define INVERT_Y_DIR false    // for Mendel set to true, for Orca set to false
-#define INVERT_Z_DIR false     // for Mendel set to false, for Orca set to true
+#define INVERT_Z_DIR false    // for Mendel set to false, for Orca set to true
 #define INVERT_E0_DIR true   // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E1_DIR true   // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E2_DIR true   // for direct drive extruder v9 set to true, for geared extruder set to false
@@ -367,7 +381,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 #define X_MIN_POS 0
 #define Y_MAX_POS 200
 #define Y_MIN_POS 0
-#define Z_MAX_POS 195
+#define Z_MAX_POS 210
 #define Z_MIN_POS 0
 
 #define X_MAX_LENGTH (X_MAX_POS - X_MIN_POS)
@@ -418,7 +432,6 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
     // with no grid, just probe 3 arbitrary points.  A simple cross-product
     // is used to esimate the plane of the print bed
 
-      
       #define ABL_PROBE_PT_1_X 30
       #define ABL_PROBE_PT_1_Y 30
       #define ABL_PROBE_PT_2_X 170
@@ -435,12 +448,12 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
   #define Y_PROBE_OFFSET_FROM_EXTRUDER -14
   #define Z_PROBE_OFFSET_FROM_EXTRUDER -1.55
 
-  #define Z_RAISE_BEFORE_HOMING 5       // (in mm) Raise Z before homing (G28) for Probe Clearance.
+  #define Z_RAISE_BEFORE_HOMING 9       // (in mm) Raise Z before homing (G28) for Probe Clearance.
                                         // Be sure you have this distance over your Z_MAX_POS in case
 
-  #define XY_TRAVEL_SPEED 8000         // X and Y axis travel speed between probes, in mm/min
+  #define XY_TRAVEL_SPEED 3000         // X and Y axis travel speed between probes, in mm/min
 
-  #define Z_RAISE_BEFORE_PROBING 5    //How much the extruder will be raised before traveling to the first probing point.
+  #define Z_RAISE_BEFORE_PROBING 9    //How much the extruder will be raised before traveling to the first probing point.
   #define Z_RAISE_BETWEEN_PROBINGS 5  //How much the extruder will be raised when traveling from between next probing points
 
   //#define Z_PROBE_SLED // turn on if you have a z-probe mounted on a sled like those designed by Charles Bell
@@ -450,7 +463,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
   //The value is the delay to turn the servo off after powered on - depends on the servo speed; 300ms is good value, but you can try lower it.
   // You MUST HAVE the SERVO_ENDSTOPS defined to use here a value higher than zero otherwise your code will not compile.
 
-#define PROBE_SERVO_DEACTIVATION_DELAY 300
+  #define PROBE_SERVO_DEACTIVATION_DELAY 300
 
 
 //If you have enabled the Bed Auto Leveling and are using the same Z Probe for Z Homing,
@@ -513,8 +526,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
 // default settings
 
-
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,2133.33,721}  // GT2 pulley 20 thooth, other spindle,  the rest is original K8200 hardware
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,2133.33,721}  // default steps per unit for K8200
 #define DEFAULT_MAX_FEEDRATE          {500, 500, 5, 500}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {9000,9000,100,10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 
@@ -533,9 +545,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 #define DEFAULT_EJERK                 5.0    // (mm/sec)
 
 
-//=============================================================================
-//============================= Additional Features ===========================
-//=============================================================================
+//===========================================================================
+//============================= Additional Features =========================
+//===========================================================================
 
 // Custom M code points
 #define CUSTOM_M_CODES
@@ -558,20 +570,17 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 //#define EEPROM_CHITCHAT
 
 // Preheat Constants
-#define PLA_PREHEAT_HOTEND_TEMP 180
-#define PLA_PREHEAT_HPB_TEMP 70
-#define PLA_PREHEAT_FAN_SPEED 255   // Insert Value between 0 and 255
+#define PLA_PREHEAT_HOTEND_TEMP 190
+#define PLA_PREHEAT_HPB_TEMP 50
+#define PLA_PREHEAT_FAN_SPEED 0   // Insert Value between 0 and 255
 
 #define ABS_PREHEAT_HOTEND_TEMP 240
-#define ABS_PREHEAT_HPB_TEMP 100
-#define ABS_PREHEAT_FAN_SPEED 255   // Insert Value between 0 and 255
+#define ABS_PREHEAT_HPB_TEMP 60
+#define ABS_PREHEAT_FAN_SPEED 0   // Insert Value between 0 and 255
 
-//==============================LCD and SD support=============================
+//LCD and SD support
 
-// Define your display language below. Replace (en) with your language code and uncomment.
-// en, pl, fr, de, es, ru, it, pt, pt-br, fi, an, nl, ca, eu
-// See also language.h
-//#define LANGUAGE_INCLUDE GENERATE_LANGUAGE_INCLUDE(en)
+// VM8201 (LCD Option for K8200) uses "DISPLAY_CHARSET_HD44870_JAPAN" and "ULTIMAKERCONTROLLER"
 
 // Character based displays can have different extended charsets.
 #define DISPLAY_CHARSET_HD44780_JAPAN     // "ääööüüß23°"
@@ -584,7 +593,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 //#define SD_CHECK_AND_RETRY // Use CRC checks and retries on the SD communication
 //#define ENCODER_PULSES_PER_STEP 1 // Increase if you have a high resolution encoder
 //#define ENCODER_STEPS_PER_MENU_ITEM 5 // Set according to ENCODER_PULSES_PER_STEP or your liking
-//#define ULTIMAKERCONTROLLER //as available from the Ultimaker online store.
+#define ULTIMAKERCONTROLLER //as available from the Ultimaker online store.
 //#define ULTIPANEL  //the UltiPanel as on Thingiverse
 //#define LCD_FEEDBACK_FREQUENCY_HZ 1000	// this is the tone frequency the buzzer plays when on UI feedback. ie Screen Click
 //#define LCD_FEEDBACK_FREQUENCY_DURATION_MS 100 // the duration the buzzer plays the UI feedback sound. ie Screen Click
@@ -744,7 +753,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
   #define SDSUPPORT
   #define ULTRA_LCD
   #ifdef DOGLCD // Change number of lines to match the DOG graphic display
-    #define LCD_WIDTH 22
+    #define LCD_WIDTH 20
     #define LCD_HEIGHT 5
   #else
     #define LCD_WIDTH 20
@@ -753,7 +762,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 #else //no panel but just LCD
   #ifdef ULTRA_LCD
   #ifdef DOGLCD // Change number of lines to match the 128x64 graphics display
-    #define LCD_WIDTH 22
+    #define LCD_WIDTH 20
     #define LCD_HEIGHT 5
   #else
     #define LCD_WIDTH 16

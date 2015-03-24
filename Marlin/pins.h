@@ -5,8 +5,6 @@
 #ifndef PINS_H
 #define PINS_H
 
-#include "boards.h"
-
 // Preset optional pins
 #define X_MS1_PIN -1
 #define X_MS2_PIN -1
@@ -114,6 +112,8 @@
   #include "pins_RAMPS_13.h"
 #elif MB(BAM_DICE_DUE)
   #include "pins_BAM_DICE_DUE.h"
+#elif MB(FELIX2)
+  #include "pins_FELIX2.h"
 #elif MB(99)
   #include "pins_99.h"
 #else
@@ -184,4 +184,7 @@
                         analogInputToDigitalPin(TEMP_BED_PIN) \
                        }
 
+#define HAS_DIGIPOTSS (DIGIPOTSS_PIN >= 0)
+
 #endif //__PINS_H
+

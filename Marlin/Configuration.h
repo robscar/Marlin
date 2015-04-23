@@ -40,7 +40,7 @@ Here are some standard links for getting your machine calibrated:
 // build by the user have been successfully uploaded into firmware.
 #define STRING_VERSION "1.0.2"
 #define STRING_URL "reprap.org"
-#define STRING_VERSION_CONFIG_H __DATE__ " " __TIME__ // build date and time
+#define STRING_VERSION_CONFIG_H __DATE__ " " __TIME__ // build date and time Test2
 #define STRING_CONFIG_H_AUTHOR "(robscar@hotmail.de, K8200 GT2 20Thooth)" // Who made the changes.
 #define STRING_SPLASH_LINE1 "v" STRING_VERSION // will be shown during bootup in line 1
 //#define STRING_SPLASH_LINE2 STRING_VERSION_CONFIG_H // will be shown during bootup in line2
